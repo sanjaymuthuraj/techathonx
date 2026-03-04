@@ -192,6 +192,7 @@ button {
   padding: 1.5rem;
   box-shadow: var(--shadow-lg);
   transition: all 0.3s ease;
+  justify-items:center;
 }
 
 .card:hover {
@@ -302,9 +303,6 @@ button {
 .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
 
 /* Flexbox Utilities */
-.flex {
-  display: flex;
-}
 
 .flex-col {
   flex-direction: column;
@@ -922,3 +920,10 @@ button {
 .z-40 { z-index: 40; }
 .z-50 { z-index: 50; }
 .z-auto { z-index: auto; }
+
+
+.form-header {
+  text-align: center;
+  white-space: nowrap;   /* Prevent line break */
+  width: 100%;
+}

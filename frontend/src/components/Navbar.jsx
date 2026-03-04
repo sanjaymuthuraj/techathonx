@@ -96,7 +96,7 @@ const Navbar = () => {
               {/* Notifications */}
               <button className="notification-btn" onClick={() => {}}>
                 <span className="notification-icon">🔔</span>
-                <span className="notification-badge">3</span>
+                <span className="notification-badge"></span>
               </button>
 
               {/* Profile Dropdown */}

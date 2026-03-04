@@ -23,6 +23,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import "./App.css";
+import "./components/Loading.css"
+import "./components/Navbar.css"
+import "./components/VitalForm.css"
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {

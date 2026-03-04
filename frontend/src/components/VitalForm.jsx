@@ -146,6 +146,7 @@ export default function VitalForm() {
 
   return (
     <div className="vital-form-container">
+      <center>
       <h3>📊 Enter Daily Vitals</h3>
       
       <div className="vitals-grid">
@@ -231,6 +232,7 @@ export default function VitalForm() {
       </button>
 
       {status && <AlertCard status={status} />}
+      </center>
     </div>
   );
 }

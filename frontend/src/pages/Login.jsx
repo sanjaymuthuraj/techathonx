@@ -48,6 +48,7 @@ function Login() {
 
   return (
     <div className="login-container">
+      <center>
       {/* Left Panel - Hidden on mobile */}
       <div className="login-illustration">
         <div className="illustration-content">
@@ -228,7 +229,9 @@ function Login() {
           </div>
         </div>
       </div>
+      </center>
     </div>
+    
   );
 }
 
