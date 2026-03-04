@@ -1,5 +1,5 @@
 // src/pages/Login.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import './Auth.css';
@@ -13,7 +13,6 @@ function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [activeField, setActiveField] = useState(null);
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -37,9 +36,7 @@ function Login() {
 
     try {
       const result = await login(formData.email, formData.password, role);
-      if (result?.success) {
-        // Success toast
-      } else {
+      if (!result?.success) {
         setError(result?.error || 'Invalid credentials');
       }
     } catch (err) {
@@ -51,43 +48,35 @@ function Login() {
 
   return (
     <div className="login-container">
-      {/* Left Panel - Healthcare Illustration */}
+      {/* Left Panel - Hidden on mobile */}
       <div className="login-illustration">
         <div className="illustration-content">
           <div className="floating-cards">
             <div className="card card-1">
               <span className="card-icon">❤️</span>
-              <span>Heart Rate</span>
-              <strong>72 bpm</strong>
+              <div className="card-info">
+                <span>Heart Rate</span>
+                <strong>72 bpm</strong>
+              </div>
             </div>
             <div className="card card-2">
               <span className="card-icon">🩺</span>
-              <span>Blood Pressure</span>
-              <strong>120/80</strong>
+              <div className="card-info">
+                <span>Blood Pressure</span>
+                <strong>120/80</strong>
+              </div>
             </div>
             <div className="card card-3">
               <span className="card-icon">🌡️</span>
-              <span>Temperature</span>
-              <strong>98.6°F</strong>
+              <div className="card-info">
+                <span>Temperature</span>
+                <strong>98.6°F</strong>
+              </div>
             </div>
           </div>
           <div className="illustration-text">
             <h1>CareTrack</h1>
-            <p>Your Complete Healthcare Monitoring Solution</p>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <span className="stat-value">24/7</span>
-                <span className="stat-label">Monitoring</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-value">100+</span>
-                <span className="stat-label">Doctors</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-value">10k+</span>
-                <span className="stat-label">Patients</span>
-              </div>
-            </div>
+            <p>Your Complete Healthcare<br />Monitoring Solution</p>
           </div>
         </div>
       </div>
@@ -128,10 +117,10 @@ function Login() {
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit}>
             {/* Email Field */}
-            <div className={`input-group ${activeField === 'email' ? 'focused' : ''}`}>
-              <label className="input-label">
+            <div className="form-group">
+              <label className="form-label">
                 <span className="label-icon">📧</span>
                 Email Address
               </label>
@@ -141,21 +130,16 @@ function Login() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  onFocus={() => setActiveField('email')}
-                  onBlur={() => setActiveField(null)}
                   placeholder="doctor@caretrack.com"
                   disabled={loading}
                   required
                 />
-                {formData.email && !error && (
-                  <span className="input-check">✓</span>
-                )}
               </div>
             </div>
 
             {/* Password Field */}
-            <div className={`input-group ${activeField === 'password' ? 'focused' : ''}`}>
-              <label className="input-label">
+            <div className="form-group">
+              <label className="form-label">
                 <span className="label-icon">🔒</span>
                 Password
               </label>
@@ -165,8 +149,6 @@ function Login() {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  onFocus={() => setActiveField('password')}
-                  onBlur={() => setActiveField(null)}
                   placeholder="••••••••"
                   disabled={loading}
                   required
@@ -183,9 +165,9 @@ function Login() {
 
             {/* Form Options */}
             <div className="form-options">
-              <label className="checkbox-container">
+              <label className="checkbox-label">
                 <input type="checkbox" defaultChecked />
-                <span className="checkmark"></span>
+                <span className="checkbox-custom"></span>
                 <span className="checkbox-text">Remember me</span>
               </label>
               <Link to="/forgot-password" className="forgot-link">
@@ -195,12 +177,15 @@ function Login() {
 
             {/* Demo Credentials */}
             <div className="demo-section">
-              <p className="demo-title">Demo Credentials</p>
+              <div className="demo-title">DEMO CREDENTIALS</div>
               <div className="demo-buttons">
                 <button
                   type="button"
                   className="demo-btn patient"
-                  onClick={() => setFormData({ email: 'patient@caretrack.com', password: 'password123' })}
+                  onClick={() => setFormData({ 
+                    email: 'patient@caretrack.com', 
+                    password: 'password123' 
+                  })}
                 >
                   <span>👤</span>
                   Patient Demo
@@ -208,7 +193,10 @@ function Login() {
                 <button
                   type="button"
                   className="demo-btn doctor"
-                  onClick={() => setFormData({ email: 'doctor@caretrack.com', password: 'password123' })}
+                  onClick={() => setFormData({ 
+                    email: 'doctor@caretrack.com', 
+                    password: 'password123' 
+                  })}
                 >
                   <span>👨‍⚕️</span>
                   Doctor Demo
@@ -230,29 +218,14 @@ function Login() {
                 </>
               )}
             </button>
-
-            {/* Social Login */}
-            <div className="social-section">
-              <div className="divider">
-                <span>Or continue with</span>
-              </div>
-              <div className="social-buttons">
-                <button type="button" className="social-btn google">
-                  <img src="https://www.google.com/favicon.ico" alt="Google" />
-                  Google
-                </button>
-                <button type="button" className="social-btn github">
-                  <span className="github-icon">⌨️</span>
-                  GitHub
-                </button>
-              </div>
-            </div>
-
-            {/* Register Link */}
-            <p className="register-text">
-              Don't have an account? <Link to="/register">Create account</Link>
-            </p>
           </form>
+
+          {/* Footer */}
+          <div className="form-footer">
+            <p className="register-text">
+              Don't have an account? <Link to="/register">Sign up</Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
